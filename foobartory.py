@@ -16,15 +16,21 @@ class Factory:
 
    def foo_mined(self):
       self.foo += 1
+      print(f"Mined 1 foo. Total foo = {self.foo}")
 
    def bar_mined(self):
       self.bar += 1
+      print(f"Mined 1 bar. Total bar = {self.bar}")
 
    def combination_result(self, success):
+      print(f"Combine 1 FOOBAR. Total foobar = {self.foobar}")
       if success:
          self.foobar += 1
+         print(f"SUCCESSFUL COMBINATION. Total foobar = {self.foobar}")
       else:
          self.foo += 1
+         print(f"FAILURE WHILE COMBINING. Total foobar = {self.foobar}. ")
+         print(f"1 FOO LOST. Total foo = {self.foo}")
    
    def init_robot(self):
       self.robots = [] 
@@ -33,34 +39,32 @@ class Factory:
       return self.robots
 
    def sell_foobar(self):
-      self.foobars -= 5
+      self.foobar -= 5
       print(f"Number of foobars sold: 5. {self.foobar} foobars left")
-      
       self.money += 5
 
    def buy_robot(self):
       before_money = self.money
       before_foos = self.foo
-      before_robots = self.robot
+      before_robots = self.robots_number
+      print(f"BEFORE PURCHASE.")
+      print(f"Factory owns {before_foos} foos.")
+      print(f"Factory owns {before_money} €.")
+      print(f"Factory owns {before_robots} robots.")
+      
+      self.money -= 3
+      self.robots.append(Bot(self.foo_mined, self.bar_mined, self.combination_result))
+      self.foo -=6
+      self.robots_number += 1
+
+      print(f"AFTER THE PURCHASE.")
+      print(f"Factory has {self.robots_number} robots left.")
+      print(f"Factory has {self.foo} foos left.")
+      print(f"Factory has {self.money} € left.")
+
       
 
-      if self.money > 3 and self.foo > 6:
-         print(f"Before payment: factory owns {before_money} €.")
-         print(f"Before payment: factory owns {before_foos} foos.")
-         print(f"Before payment: factory owns {before_robots} robots.")
-
-         self.money -= 3
-         self.foo -= 6
-         self.robots.append(Bot(self.foo_mined, self.bar_mined, self.combination_result))
-         print("Factory acquires 1 robot.")
-         print(f"Factory spent : {before_money - self.money}€.")
-         print(f"After payment : Factory owns {self.money} €.")
-
-         print(f"After payment : consummed {before_foos - self.foo} .")
-         print(f"Factory keeps : {self.foo} foos.")
-
-         print(f"Factory had")
-         print(f"")
+         
 
 
 
@@ -70,9 +74,22 @@ class Factory:
       print("Production starts.")
       robots = self.init_robot()
    
-      while self.robots_number < 30:
+      while self.robots_number < 4:
          
+         if self.money >= 3 and self.foo >=6 :
+            print("Factory orders a NEW robot! ")
+            self.buy_robot()
+
          for robot in robots:
+
+            if self.foobar >= 5:
+               before_money = self.money
+               print(f"Before sale: factory owns {before_money} €.")
+               self.sell_foobar()
+               print(f"After sale: earned {self.money - before_money} €.")
+               print(f"Factory owns : {self.money} €.")
+               continue
+
             if not self.bar:
                print("Not enough bar. Extraction will start.")
                robot.mine_bar(fac.current_time)
@@ -90,18 +107,7 @@ class Factory:
                self.bar -= 1 
                continue
             
-            if self.foobar >= 5:
-               before_money = self.money
-               print(f"Before sale: factory owns {before_money} €.")
-               fac.sell_foobar()
-               print(f"After sale: earned {self.money - before_money} €.")
-               print(f"Factory owns : {self.money} €.")
-
          self.current_time += 1
-
-      
-
-
 
 
 if __name__ == "__main__":

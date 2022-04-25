@@ -3,13 +3,13 @@ import random
 
 
 class Task:
-   def __init__(self, completion_time, callback_method, task_result = None):
+   def __init__(self, completion_time, callback_method, task_result=None):
       self.completion_time = completion_time
       self.task_result = task_result
       self.callback_method = callback_method
 
    def perform(self):
-      if self.task_result:
+      if self.task_result is not None:
          print(f"I have finished {self.callback_method}.")
          self.callback_method(self.task_result)
       else:
@@ -64,6 +64,7 @@ class Bot:
       self.task = Task(completion_time, self.bar_mined)
 
    def combine(self, current_time, execution_time=2):
+      
       if self.busy_until > current_time:
          print("I am busy.")
          return
@@ -80,3 +81,4 @@ class Bot:
    def perform_task(self, current_time):
       if self.task and self.task.completion_time > current_time :
          self.task.perform()
+         self.task = None
