@@ -52,9 +52,10 @@ class Factory:
       print(f"Factory owns {before_money} €.")
       print(f"Factory owns {before_robots} robots.")
       
+      print("BUYING NEW ROBOT!")
       self.money -= 3
       self.robots.append(Bot(self.foo_mined, self.bar_mined, self.combination_result))
-      self.foo -=6
+      self.foo -= 6
       self.robots_number += 1
 
       print(f"AFTER THE PURCHASE.")
@@ -74,9 +75,9 @@ class Factory:
       print("Production starts.")
       robots = self.init_robot()
    
-      while self.robots_number < 4:
+      while self.robots_number < 30:
          
-         if self.money >= 3 and self.foo >=6 :
+         if self.money >= 3 and self.foo > 6 :
             print("Factory orders a NEW robot! ")
             self.buy_robot()
 
@@ -90,17 +91,17 @@ class Factory:
                print(f"Factory owns : {self.money} €.")
                continue
 
-            if not self.bar:
+            if self.bar < 3:
                print("Not enough bar. Extraction will start.")
                robot.mine_bar(fac.current_time)
                continue
             
-            if not self.foo:
+            if self.foo < 7:
                print("Not enough foo. Extraction will start.")
                robot.mine_foo(fac.current_time, 1)
                continue
             
-            if self.foo and self.bar:
+            if self.foo and self.bar and self.foo > 6:
                "Starting the combination process."
                robot.combine(fac.current_time, 2)
                self.foo -= 1
