@@ -59,17 +59,11 @@ class Factory:
       self.robots_number += 1
 
       print(f"AFTER THE PURCHASE.")
-      print(f"Factory has {self.robots_number} robots left.")
+      print(f"Factory has {self.robots_number} robots.")
       print(f"Factory has {self.foo} foos left.")
       print(f"Factory has {self.money} € left.")
 
-      
-
-         
-
-
-
-
+   
 
    def work(self):
       print("Production starts.")

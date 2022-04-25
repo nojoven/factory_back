@@ -18,11 +18,8 @@ class Task:
          print(f"I am performing {self.callback_method}.")
 
 
-
-
 class Bot:
    """This is the blueprint for our bots"""
-
    def __init__(
          self, 
          foo_mined, 
@@ -43,7 +40,7 @@ class Bot:
       if self.busy_until > current_time:
          print("Foo? I am busy.")
          return
-      self.perform_task(current_time)
+      self.complete_task(current_time)
 
       self.busy_until = current_time + execution_time
       completion_time = self.busy_until if self.is_same_task(self.foo_mined) else self.busy_until + 5
@@ -53,7 +50,7 @@ class Bot:
       if self.busy_until > current_time:
          print("Bar? I am busy.")
          return
-      self.perform_task(current_time)
+      self.complete_task(current_time)
 
       self.busy_until = current_time + execution_time
       print(f"I will be busy until {self.busy_until}.")
@@ -68,7 +65,7 @@ class Bot:
       if self.busy_until > current_time:
          print("I am busy.")
          return
-      self.perform_task(current_time)
+      self.complete_task(current_time)
 
       self.busy_until = current_time + execution_time
       print(f"I will be busy until {self.busy_until}.")
@@ -78,7 +75,7 @@ class Bot:
 
       self.task = Task(completion_time, self.combination_result, random.randrange(100) < 60)
 
-   def perform_task(self, current_time):
+   def complete_task(self, current_time):
       if self.task and self.task.completion_time > current_time :
          self.task.perform()
          self.task = None
